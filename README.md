@@ -18,7 +18,6 @@ Usage
 ----------
 
 ```python
-#TODO
 raise NotImplementedError
 ```
 
@@ -26,7 +25,6 @@ Deployment
 ----------
 
 ```python
-#TODO
 raise NotImplementedError
 ```
 
