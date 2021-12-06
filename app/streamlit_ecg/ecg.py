@@ -42,7 +42,7 @@ def build_model(data):
 
     st.subheader('2. Model Prediction')
 
-    model = load_model('ecg_streamlit/ResNet_30s_34lay_16conv.hdf5')
+    model = load_model('streamlit_ecg/ResNet_30s_34lay_16conv.hdf5')
 
     classes = ['Atrial Fibrillation', 'Normal', 'Other Rhythm','Noise']
 
