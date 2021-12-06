@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 import numpy as np
 import scipy.io
 import pathlib
-from tensorflow import keras
+# from tensorflow import keras
 
 
 #---------------------------------#
