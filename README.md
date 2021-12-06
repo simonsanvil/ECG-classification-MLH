@@ -1,7 +1,7 @@
 ECG-Classification
 ==============================
 
-Diagnose types of Arrhythmia from an ECG signal using Machine Learning and Deeep Learning models.
+Web app to diagnose types of Arrhythmia from user-uploaded ECG signals using Machine Learning and Deeep Learning models.
 
 Authors:
 --------
@@ -13,21 +13,45 @@ Authors:
 - Zijun He
 
 
+Requirements
+----------
+- python>=3.6
 
 Usage
 ----------
 
-```python
-raise NotImplementedError
+### Run from the command line
+
+```bash
+# Create a virtual environment and install dependencies
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+# move to the directory app
+cd app
+# start the streamlit app
+streamlit run streamlit_ecg/ecg.py
 ```
 
-Deployment
+After running the commands above you'll be able to access the app from your local browser.
+
+### Run with Docker
+
+Use Docker to start the streamlit server to demo the app.
+
+```bash
+docker build -t ecg-classification-mlh .
+# Wait until the image is built...
+docker run ecg-classification-mlh
+```
+
+
+Reproducibility
 ----------
 
 ```python
-raise NotImplementedError
+#TODO
 ```
-
 
 ---------
 
@@ -58,28 +82,39 @@ Project Organization
     ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
     │   └── figures        <- Generated graphics and figures to be used in reporting
     │
+    ├── app                <- Directory where the web app is runned.
+    │   ├── requirements.txt   <- specific dependencies of the streamlit app
+    │   |
+    │   ├── prod-config.toml <- configuration file for production
+    │   |
+    |   └───streamlit_ecg  <- Files used by the streamlit app.
+    │       ├── ecg.py     <- The streamlit app itself.
+    │       ├── validation/ <- sample ECGs for demonstration.
+    │       └── model.mod <- The model used by the app to make predictions.        
+    |
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
     │                         generated with `pip freeze > requirements.txt`
     │
     ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+    |
+    └── src                <- Source code for use in this project.
+        ├── __init__.py    <- Makes src a Python module
+        │
+        ├── data           <- Scripts to download or generate data
+        │   └── make_dataset.py
+        │
+        ├── features       <- Scripts to turn raw data into features for modeling
+        │   └── build_features.py
+        │
+        ├── models         <- Scripts to train models and then use trained models to make
+        │   │                 predictions
+        │   ├── predict_model.py
+        │   └── train_model.py
+        │
+        └── visualization  <- Scripts to create exploratory and results oriented visualizations
+           └── visualize.py
+    
+    
 
 
 --------
