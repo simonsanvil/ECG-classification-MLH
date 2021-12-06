@@ -13,7 +13,7 @@ ADD app /app
 WORKDIR /app
 
 # copy production config to .streamlit folder
-RUN mkdir -p .streamlit/ && cp prod-config.tpml .streamlit/config.toml
+RUN mkdir -p .streamlit/ && cp prod-config.toml .streamlit/config.toml
 
 # install the requirements
 RUN pip3 install -r requirements.txt
