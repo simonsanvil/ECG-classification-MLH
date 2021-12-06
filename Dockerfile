@@ -6,11 +6,14 @@ RUN apt-get update && apt-get install -y python3-pip && apt-get install -y git
 # Upgrade pip
 RUN pip3 install --upgrade pip
 
-# clone the project repo
-RUN git clone  https://github.com/simonsanvil/ECG-classification-MLH
+# Add the project folder to the container
+ADD app /app
 
-# change to the app directory
-WORKDIR /ECG-classification-MLH/app
+# cd to the project folder
+WORKDIR /app
+
+# copy production config to .streamlit folder
+RUN mkdir -p .streamlit/ && cp prod-config.tpml .streamlit/config.toml
 
 # install the requirements
 RUN pip3 install -r requirements.txt
