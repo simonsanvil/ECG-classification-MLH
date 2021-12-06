@@ -3,7 +3,9 @@ ECG-Classification
 
 Web app to diagnose types of Arrhythmia from user-uploaded ECG signals using Machine Learning and Deeep Learning models.
 
-[Try it yourself](https://ecg-classification.azurewebsites.net/)
+The data used to train and test the models used by this app comes from the [PhysioNet 2017 AF Classification Challenge](https://physionet.org/content/challenge-2017/1.0.0/).
+
+Try the app yourself [here].(https://ecg-classification.azurewebsites.net/)
 
 Authors:
 --------
@@ -55,7 +57,15 @@ Reproducibility
 #TODO
 ```
 
----------
+References
+----------
+
+> Goldberger, A., et al. "PhysioBank, PhysioToolkit, and PhysioNet:
+Components of a new research resource for complex physiologic signals.
+Circulation [Online]. 101 (23), pp. e215–e220." (2000).
+
+
+-------
 
 Project Organization
 ------------
