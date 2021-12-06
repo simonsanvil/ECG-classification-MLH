@@ -3,6 +3,8 @@ ECG-Classification
 
 Web app to diagnose types of Arrhythmia from user-uploaded ECG signals using Machine Learning and Deeep Learning models.
 
+[Try it yourself](https://ecg-classification.azurewebsites.net/)
+
 Authors:
 --------
 
