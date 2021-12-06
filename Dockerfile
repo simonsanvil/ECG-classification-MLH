@@ -16,4 +16,4 @@ WORKDIR /ECG-classification-MLH/app
 RUN pip3 install -r requirements.txt
 
 # run the streamlit app
-CMD ["streamlit", "run", "ecg_streamlit/ecg.py"]
+CMD ["streamlit", "run", "streamlit_ecg/ecg.py"]
