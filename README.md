@@ -5,7 +5,7 @@ Web app to diagnose types of Arrhythmia from user-uploaded ECG signals using Mac
 
 The data used to train and test the models used by this app comes from the [PhysioNet 2017 AF Classification Challenge](https://physionet.org/content/challenge-2017/1.0.0/).
 
-Try the app yourself [here].(https://ecg-classification.azurewebsites.net/)
+Try the app yourself [here](https://ecg-classification.azurewebsites.net/).
 
 Authors:
 --------

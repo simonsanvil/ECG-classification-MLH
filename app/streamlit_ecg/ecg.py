@@ -23,7 +23,7 @@ st.write("""
 
 In this app, a pre-trained model from the [Physionet 2017 Cardiology Challenge](https://physionet.org/content/challenge-2017/1.0.0/) is used to detect heart anomalies like AF or arrythmia.
 
-**Possible Predictions:** Atrial Fibrillation, Normal, Other Rhythm, Noise
+**Possible Predictions:** Atrial Fibrillation, Normal, Other Rhythm, or Noise
 
 ### Authors:
 
