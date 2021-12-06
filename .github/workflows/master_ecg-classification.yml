@@ -1,8 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
-# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - ECG-Classification
+name: Build and deploy container app to Azure Web App - ecg-classification
 
 on:
   push:
@@ -12,52 +11,41 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: 'ubuntu-latest'
 
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Set up Python version
-        uses: actions/setup-python@v1
-        with:
-          python-version: '3.8'
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
 
-      - name: Create and start virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-      
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-        
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-      
-      - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v2
-        with:
-          name: python-app
-          path: |
-            . 
-            !venv/
+    - name: Log in to registry
+      uses: docker/login-action@v1
+      with:
+        registry: https://ecgclassificationreg.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_e9ede5706fb64937b77b4db1930ef9f8 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_88f7de60243247c1a597232a7b882358 }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: ecgclassificationreg.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_e9ede5706fb64937b77b4db1930ef9f8 }}/mlh-ecg-classification:${{ github.sha }}
+        file: ./Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Production'
+      name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: python-app
-          path: .
-          
-      - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
-        id: deploy-to-webapp
-        with:
-          app-name: 'ECG-Classification'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_792101E37F164EEA85CD569918581976 }}
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'ecg-classification'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_0a48bb78d2b542f5b5a27777b90576af }}
+        images: 'ecgclassificationreg.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_e9ede5706fb64937b77b4db1930ef9f8 }}/mlh-ecg-classification:${{ github.sha }}'
