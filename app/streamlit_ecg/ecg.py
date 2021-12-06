@@ -10,8 +10,34 @@ import scipy.io
 #---------------------------------#
 # Page layout
 ## Page expands to full width
-st.set_page_config(page_title='ECG classification',
-    layout='wide')
+st.set_page_config(
+    page_title='🫀 ECG classification',
+    # anatomical heart favicon
+    page_icon="https://api.iconify.design/openmoji/anatomical-heart.svg?width=500",
+    layout='wide'
+)
+
+# PAge Intro
+st.write("""
+# 🫀 ECG Classification
+
+In this app, a pre-trained model from the [Physionet 2017 Cardiology Challenge](https://physionet.org/content/challenge-2017/1.0.0/) is used to detect heart anomalies like AF or arrythmia.
+
+**Possible Predictions:** Atrial Fibrillation, Normal, Other Rhythm, Noise
+
+### Authors:
+
+- Andres Ruiz Calvo
+- Daniel De Las Cuevas Turel
+- Enrique Botía Barbera
+- Simon E. Sanchez Viloria
+- Zijun He
+
+
+**Try uploading your own ECG!**
+
+-------
+""".strip())
 
 #---------------------------------#
 # Data preprocessing and Model building
@@ -56,26 +82,6 @@ def build_model(data):
 
 
 #---------------------------------#
-st.write("""
-# ECG Classification
-
-In this app, a pre-trained model from the [Physionet 2017 Cardiology Challenge](https://physionet.org/content/challenge-2017/1.0.0/) is used to detect heart anomalies like AF or arrythmia.
-
-**Possible Predictions:** Atrial Fibrillation, Normal, Other Rhythm, Noise
-
-### Authors:
-
-- Andres Ruiz Calvo
-- Daniel De Las Cuevas Turel
-- Enrique Botía Barbera
-- Simon E. Sanchez Viloria
-- Zijun He
-
-
-**Try uploading your own ECG!**
-
--------
-""".strip())
 
 hide_streamlit_style = """
         <style>
@@ -117,7 +123,7 @@ if uploaded_file is None:
                 uploaded_file = f
         st.sidebar.markdown("Source: Physionet 2017 Cardiology Challenge")
 else:
-    st.sidebar.text ("Remove the file to use the validation set.")
+    st.sidebar.markdown("Remove the file above to use the validation set.")
 
 #---------------------------------#
 # Main panel
