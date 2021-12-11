@@ -149,7 +149,7 @@ if uploaded_file is None:
                 uploaded_file = f
         st.sidebar.markdown("Source: Physionet 2017 Cardiology Challenge")
 else:
-    st.sidebar.markdown("Remove the file above to use the validation set.")
+    st.sidebar.markdown("Remove the file above to demo using the validation set.")
 
 #---------------------------------#
 # Main panel
