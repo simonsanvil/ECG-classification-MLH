@@ -64,7 +64,7 @@ def read_ecg_preprocessing(uploaded_ecg):
       uploaded_ecg = np.expand_dims(uploaded_ecg, axis=2)
       return uploaded_ecg
 
-model_path = 'streamlit_ecg/weights-best.hdf5'
+model_path = '../models/weights-best.hdf5'
 classes = ['Normal','Atrial Fibrillation','Other','Noise']
 
 def build_model(data):
