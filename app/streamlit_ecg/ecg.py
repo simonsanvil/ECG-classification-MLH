@@ -71,7 +71,7 @@ models = {}
 def build_model(data):
 
 
-    st.subheader('2. Model Prediction')
+    st.subheader('2. Model Predictions')
 
     if model_path not in models:
         model = load_model(f'{model_path}')
