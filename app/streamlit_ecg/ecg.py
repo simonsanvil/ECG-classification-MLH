@@ -109,14 +109,30 @@ with st.sidebar.header('1. Upload your ECG'):
 
 st.sidebar.markdown("")
 
+file_gts = {
+    "A00001" : "Normal",
+    "A00002" : "Normal",
+    "A00003" : "Normal",
+    "A00004" : "Atrial Fibrilation",
+    "A00005" : "Other",
+    "A00006" : "Normal",
+    "A00007" : "Normal",
+    "A00008" : "Other",
+    "A00009" : "Atrial Fibrilation",
+    "A00010" : "Normal",
+    "A00205" : "Noise"
+}
+
 if uploaded_file is None:
     with st.sidebar.header('2. Or use a file from the validation set'):
         pre_trained_ecg = st.sidebar.selectbox(
-            'Select a file from the training set',
+            'Select a file from the validation set',
             ['None','A00001.mat','A00002.mat','A00003.mat','A00004.mat',
-            'A00005.mat','A00006.mat','A00007.mat','A00008.mat','A00009.mat'
+            'A00005.mat','A00006.mat','A00007.mat','A00008.mat','A00009.mat','A00010.mat'
             ],
-            index=1
+            format_func=lambda x: str(file_gts.get(x)) + ((x.replace("A","").replace("0","") + ".mat") if ".mat" in x else ""),
+            index=1,
+
         )
         if pre_trained_ecg != "None":
             f = open("streamlit_ecg/validation/"+pre_trained_ecg, 'rb')
