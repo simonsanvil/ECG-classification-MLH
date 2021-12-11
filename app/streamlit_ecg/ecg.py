@@ -11,7 +11,7 @@ import scipy.io
 # Page layout
 ## Page expands to full width
 st.set_page_config(
-    page_title='🫀 ECG classification',
+    page_title='🫀 ECG Classification',
     # anatomical heart favicon
     page_icon="https://api.iconify.design/openmoji/anatomical-heart.svg?width=500",
     layout='wide'
@@ -21,7 +21,8 @@ st.set_page_config(
 st.write("""
 # 🫀 ECG Classification
 
-In this app, a pre-trained model from the [Physionet 2017 Cardiology Challenge](https://physionet.org/content/challenge-2017/1.0.0/) is used to detect heart anomalies like AF or arrythmia.
+In this app, a pre-trained model from the [Physionet 2017 Cardiology Challenge](https://physionet.org/content/challenge-2017/1.0.0/) 
+is used to detect heart anomalies.
 
 **Possible Predictions:** Atrial Fibrillation, Normal, Other Rhythm, or Noise
 
@@ -139,7 +140,7 @@ if uploaded_file is not None:
     
     #st.write(ecg)
     pred,conf = build_model(ecg)
-    classes = ['Atrial Fibrillation', 'Normal', 'Other Rhythm','Noise']
+    classes = ['Normal','Atrial Fibrillation','Other','Noise']
     mkd_pred_table = """
     | Rhythm Type | Confidence |
     | --- | --- |
