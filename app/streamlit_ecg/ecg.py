@@ -66,13 +66,18 @@ def read_ecg_preprocessing(uploaded_ecg):
 
 model_path = '../models/weights-best.hdf5'
 classes = ['Normal','Atrial Fibrillation','Other','Noise']
+models = {}
 
 def build_model(data):
 
 
     st.subheader('2. Model Prediction')
 
-    model = load_model(f'{model_path}')
+    if model_path not in models:
+        model = load_model(f'{model_path}')
+        models[model_path] = model
+    else:
+        model = models[model_path]
 
     prob = model.predict(data)
     ann = np.argmax(prob)
