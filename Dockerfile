@@ -9,6 +9,9 @@ RUN pip3 install --upgrade pip
 # Add the project folder to the container
 ADD app /app
 
+# Add the models folder to the container
+ADD models /models
+
 # cd to the project folder
 WORKDIR /app
 
