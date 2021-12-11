@@ -64,14 +64,15 @@ def read_ecg_preprocessing(uploaded_ecg):
       uploaded_ecg = np.expand_dims(uploaded_ecg, axis=2)
       return uploaded_ecg
 
+model_path = 'streamlit_ecg/weights-best.hdf5'
+classes = ['Normal','Atrial Fibrillation','Other','Noise']
+
 def build_model(data):
 
 
     st.subheader('2. Model Prediction')
 
-    model = load_model('streamlit_ecg/ResNet_30s_34lay_16conv.hdf5')
-
-    classes = ['Atrial Fibrillation', 'Normal', 'Other Rhythm','Noise']
+    model = load_model(f'{model_path}')
 
     prob = model.predict(data)
     ann = np.argmax(prob)
@@ -120,17 +121,25 @@ file_gts = {
     "A00008" : "Other",
     "A00009" : "Atrial Fibrilation",
     "A00010" : "Normal",
-    "A00205" : "Noise"
+    "A00015" : "Atrial Fibrilation",
+    "A00205" : "Noise",
+    "A00022" : "Noise",
+    "A00034" : "Noise",
 }
+valfiles = [
+    'None',
+    'A00001.mat','A00010.mat','A00002.mat','A00003.mat',
+    "A00022.mat", "A00034.mat",'A00009.mat',"A00015.mat",
+    'A00008.mat','A00006.mat','A00007.mat','A00004.mat',
+    "A00205.mat",'A00005.mat'
+]
 
 if uploaded_file is None:
     with st.sidebar.header('2. Or use a file from the validation set'):
         pre_trained_ecg = st.sidebar.selectbox(
             'Select a file from the validation set',
-            ['None','A00001.mat','A00002.mat','A00003.mat','A00004.mat',
-            'A00005.mat','A00006.mat','A00007.mat','A00008.mat','A00009.mat','A00010.mat'
-            ],
-            format_func=lambda x: str(file_gts.get(x)) + ((x.replace("A","").replace("0","") + ".mat") if ".mat" in x else ""),
+            valfiles,
+            format_func=lambda x: f'{x} ({(file_gts.get(x.replace(".mat","")))})' if ".mat" in x else x,
             index=1,
 
         )
@@ -156,7 +165,6 @@ if uploaded_file is not None:
     
     #st.write(ecg)
     pred,conf = build_model(ecg)
-    classes = ['Normal','Atrial Fibrillation','Other','Noise']
     mkd_pred_table = """
     | Rhythm Type | Confidence |
     | --- | --- |
