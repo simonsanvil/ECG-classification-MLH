@@ -68,18 +68,15 @@ model_path = '../models/weights-best.hdf5'
 classes = ['Normal','Atrial Fibrillation','Other','Noise']
 models = {}
 
+@st.cache(allow_output_mutation=True,show_spinner=False)
 def build_model(data):
-
-
-    st.subheader('2. Model Predictions')
-
     if model_path not in models:
         model = load_model(f'{model_path}')
         models[model_path] = model
     else:
         model = models[model_path]
 
-    prob = model.predict(data)
+    prob = model(data)
     ann = np.argmax(prob)
     #true_target =
     #print(true_target,ann)
@@ -169,7 +166,9 @@ if uploaded_file is not None:
     st.line_chart(pd.DataFrame(np.concatenate(ecg).ravel().tolist()))
     
     #st.write(ecg)
-    pred,conf = build_model(ecg)
+    st.subheader('2. Model Predictions')
+    with st.spinner(text="Running Model..."):
+        pred,conf = build_model(ecg)
     mkd_pred_table = """
     | Rhythm Type | Confidence |
     | --- | --- |
