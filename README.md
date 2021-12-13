@@ -3,6 +3,7 @@ ECG AF Classification
 
 [![Deploy to Azure Web App](https://github.com/simonsanvil/ECG-classification-MLH/actions/workflows/master_ecg-classification.yml/badge.svg)](https://github.com/simonsanvil/ECG-classification-MLH/actions/workflows/master_ecg-classification.yml)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/simonsanvil/ECG-classification-MLH/HEAD)[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/simonsanvil/ECG-classification-MLH) 
+[![!notion](https://img.shields.io/static/v1?logo=notion&label=Notion&message=page&color=darkgray)](https://simonsviloria.notion.site/ECG-Classification-Project-MLH-0a859113d11f4d0ab4d4b2b7fb6b34e5)
 [![!discord](https://img.shields.io/static/v1?logo=discord&label=discord&message=chat&color=lightgreen)](https://discord.gg/tfy6dDKgcP)
 
 Web app to diagnose types of Arrhythmia from user-uploaded ECG signals using Machine Learning and Deeep Learning models.
