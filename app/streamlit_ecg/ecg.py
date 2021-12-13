@@ -1,11 +1,10 @@
 import streamlit as st
-import pandas as pd
 from tensorflow.keras.models import load_model
 import numpy as np
 import scipy.io
 # import pathlib
 # from tensorflow import keras
-
+from visualize_ecg import plot_ecg
 
 #---------------------------------#
 # Page layout
@@ -163,8 +162,10 @@ if uploaded_file is not None:
 
     ecg = read_ecg_preprocessing(uploaded_file)
 
-    st.line_chart(pd.DataFrame(np.concatenate(ecg).ravel().tolist()))
-    
+    #st.line_chart(pd.DataFrame(np.concatenate(ecg).ravel().tolist()))
+    fig = plot_ecg(uploaded_ecg=ecg, FS=300)
+    st.pyplot(fig)
+
     #st.write(ecg)
     st.subheader('2. Model Predictions')
     with st.spinner(text="Running Model..."):
