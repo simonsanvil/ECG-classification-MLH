@@ -42,6 +42,7 @@ dataset.
 #---------------------------------#
 # Data preprocessing and Model building
 
+@st.cache(allow_output_mutation=True)
 def read_ecg_preprocessing(uploaded_ecg):
 
       FS = 300
@@ -65,16 +66,14 @@ def read_ecg_preprocessing(uploaded_ecg):
 
 model_path = 'models/weights-best.hdf5'
 classes = ['Normal','Atrial Fibrillation','Other','Noise']
-models = {}
+
+@st.cache(allow_output_mutation=False,ttl=24*60*60)
+def get_model(model_path):
+    model = load_model(f'{model_path}')
+    return model
 
 @st.cache(allow_output_mutation=True,show_spinner=False)
-def build_model(data):
-    if model_path not in models:
-        model = load_model(f'{model_path}')
-        models[model_path] = model
-    else:
-        model = models[model_path]
-
+def get_prediction(data,model):
     prob = model(data)
     ann = np.argmax(prob)
     #true_target =
@@ -84,7 +83,14 @@ def build_model(data):
     return classes[ann],prob #100*prob[0,ann]
 
 
-#---------------------------------#
+# Visualization --------------------------------------
+@st.cache(allow_output_mutation=True,show_spinner=False)
+def visualize_ecg(ecg,FS):
+    fig = plot_ecg(uploaded_ecg=ecg, FS=FS)
+    return fig
+
+
+#Formatting ---------------------------------#
 
 hide_streamlit_style = """
         <style>
@@ -155,6 +161,8 @@ else:
 #---------------------------------#
 # Main panel
 
+model = get_model(f'{model_path}')
+
 if uploaded_file is not None:
     #st.write(uploaded_file)
     col1,_,col2 = st.columns((0.5,.05,0.45))
@@ -163,14 +171,14 @@ if uploaded_file is not None:
         st.subheader('1.Visualize ECG')
         ecg = read_ecg_preprocessing(uploaded_file)
         
-        fig = plot_ecg(uploaded_ecg=ecg, FS=300)
+        fig = visualize_ecg(ecg, FS=300)
         st.pyplot(fig, use_container_width=True)
         
 
     with col2: # classify ECG
         st.subheader('2. Model Predictions')
         with st.spinner(text="Running Model..."):
-            pred,conf = build_model(ecg)
+            pred,conf = get_prediction(ecg,model)
         mkd_pred_table = """
         | Rhythm Type | Confidence |
         | --- | --- |
