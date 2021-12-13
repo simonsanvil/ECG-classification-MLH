@@ -1,6 +1,11 @@
 ECG-Classification
 ==============================
 
+[![Deploy to Azure Web App](https://github.com/simonsanvil/ECG-classification-MLH/actions/workflows/master_ecg-classification.yml/badge.svg)](https://github.com/simonsanvil/ECG-classification-MLH/actions/workflows/master_ecg-classification.yml)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/simonsanvil/ECG-classification-MLH/HEAD)[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/simonsanvil/ECG-classification-MLH) 
+
+[![!discord](https://img.shields.io/static/v1?logo=discord&label=discord&message=chat&color=lightgreen)](https://discord.gg/tfy6dDKgcP)
+
 Web app to diagnose types of Arrhythmia from user-uploaded ECG signals using Machine Learning and Deeep Learning models.
 
 The data used to train and test the models used by this app comes from the [PhysioNet 2017 AF Classification Challenge](https://physionet.org/content/challenge-2017/1.0.0/).
@@ -31,10 +36,8 @@ Usage
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-# move to the directory app
-cd app
 # start the streamlit app
-streamlit run streamlit_ecg/ecg.py
+streamlit run app/main.py
 ```
 
 After running the commands above you'll be able to access the app from your local browser.
@@ -44,18 +47,19 @@ After running the commands above you'll be able to access the app from your loca
 Use Docker to start the streamlit server to demo the app.
 
 ```bash
-docker build -t ecg-classification-mlh .
+docker build -t ecg-classification .
 # Wait until the image is built...
-docker run ecg-classification-mlh
+docker run ecg-classification
 ```
-
 
 Reproducibility
 ----------
 
-```python
-#TODO
-```
+1. Clone this repository.
+2. Go to the notebooks folder and explore our analysis or open the notebook used to train the model here [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/simonsanvil/ECG-classification-MLH/blob/master/notebooks/ECG-Zijun.ipynb)
+
+3. Train the models yourself or load the pre-trained weights that we've provided in the models/ folder.
+4. Run the streamlit app to see the results.
 
 References
 ----------
