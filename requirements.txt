@@ -12,4 +12,5 @@ python-dotenv>=0.5.1
 tensorflow>=2.5.1
 keras==2.4
 streamlit
+matplotlib
 
