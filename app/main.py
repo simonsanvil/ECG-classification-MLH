@@ -4,7 +4,7 @@ import numpy as np
 import scipy.io
 # import pathlib
 # from tensorflow import keras
-from visualize_ecg import plot_ecg
+from src.visualization import plot_ecg
 
 #---------------------------------#
 # Page layout
@@ -20,8 +20,8 @@ st.set_page_config(
 st.write("""
 # 🫀 ECG Classification
 
-In this app, a pre-trained model from the [Physionet 2017 Cardiology Challenge](https://physionet.org/content/challenge-2017/1.0.0/) 
-is used to detect heart anomalies.
+For this app, we trained a model to detect heart anomalies based on the [Physionet 2017 Cardiology Challenge](https://physionet.org/content/challenge-2017/1.0.0/) 
+dataset.
 
 **Possible Predictions:** Atrial Fibrillation, Normal, Other Rhythm, or Noise
 
@@ -63,7 +63,7 @@ def read_ecg_preprocessing(uploaded_ecg):
       uploaded_ecg = np.expand_dims(uploaded_ecg, axis=2)
       return uploaded_ecg
 
-model_path = '../models/weights-best.hdf5'
+model_path = 'models/weights-best.hdf5'
 classes = ['Normal','Atrial Fibrillation','Other','Noise']
 models = {}
 
@@ -145,7 +145,7 @@ if uploaded_file is None:
 
         )
         if pre_trained_ecg != "None":
-            f = open("streamlit_ecg/validation/"+pre_trained_ecg, 'rb')
+            f = open("data/validation/"+pre_trained_ecg, 'rb')
             if not uploaded_file:
                 uploaded_file = f
         st.sidebar.markdown("Source: Physionet 2017 Cardiology Challenge")
@@ -157,26 +157,29 @@ else:
 
 if uploaded_file is not None:
     #st.write(uploaded_file)
+    col1,_,col2 = st.columns((0.5,.05,0.45))
 
-    st.subheader('1.Visualize ECG')
+    with col1: # visualize ECG
+        st.subheader('1.Visualize ECG')
+        ecg = read_ecg_preprocessing(uploaded_file)
+        
+        fig = plot_ecg(uploaded_ecg=ecg, FS=300)
+        st.pyplot(fig, use_container_width=True)
+        
 
-    ecg = read_ecg_preprocessing(uploaded_file)
+    with col2: # classify ECG
+        st.subheader('2. Model Predictions')
+        with st.spinner(text="Running Model..."):
+            pred,conf = build_model(ecg)
+        mkd_pred_table = """
+        | Rhythm Type | Confidence |
+        | --- | --- |
+        """ + "\n".join([f"| {classes[i]} | {conf[0][i]*100:.2f}% |" for i in range(len(classes))])
 
-    #st.line_chart(pd.DataFrame(np.concatenate(ecg).ravel().tolist()))
-    fig = plot_ecg(uploaded_ecg=ecg, FS=300)
-    st.pyplot(fig)
+        st.write("ECG classified as **{}**".format(pred))
+        pred_confidence = conf[0,np.argmax(conf)]*100
+        st.write("Confidence of the prediction: **{:3.1f}%**".format(pred_confidence))
+        st.write(f"**Likelihoods:**")
+        st.markdown(mkd_pred_table, unsafe_allow_html=True)
 
-    #st.write(ecg)
-    st.subheader('2. Model Predictions')
-    with st.spinner(text="Running Model..."):
-        pred,conf = build_model(ecg)
-    mkd_pred_table = """
-    | Rhythm Type | Confidence |
-    | --- | --- |
-    """ + "\n".join([f"| {classes[i]} | {conf[0][i]*100:.2f}% |" for i in range(len(classes))])
-
-    st.write("ECG classified as **{}**".format(pred))
-    pred_confidence = conf[0,np.argmax(conf)]*100
-    st.write("Confidence of the prediction: **{:3.1f}%**".format(pred_confidence))
-    st.write(f"**Likelihoods:**")
-    st.markdown(mkd_pred_table, unsafe_allow_html=True)
+    # st.line_chart(np.concatenate(ecg).ravel().tolist())

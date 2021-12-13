@@ -10,21 +10,22 @@ RUN pip3 install --upgrade pip
 ADD app /app
 
 # Add src folder to the container
-ADD src app/src
+ADD src /src
 
-ADD setup.py /app/setup.py
+# Add setup.py to the container in order to install the project's codebase
+ADD setup.py setup.py
+
+# Add the data folder to the container
+ADD data /data
 
 # Add the models folder to the container
 ADD models /models
 
-# cd to the project folder
-WORKDIR /app
-
 # copy production config to .streamlit folder
-RUN mkdir -p .streamlit/ && cp prod-config.toml .streamlit/config.toml
+RUN mkdir -p .streamlit/ && cp app/prod-config.toml .streamlit/config.toml
 
 # install the requirements
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r app/requirements.txt
 
 # run the streamlit app
-CMD ["streamlit", "run", "streamlit_ecg/ecg.py"]
+CMD ["streamlit", "run", "app/main.py"]
