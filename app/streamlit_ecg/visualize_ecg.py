@@ -17,7 +17,7 @@ def plot_ecg(uploaded_ecg,FS):
         ax.set_title(f'Segment from {i*5} to {5*i+5} seconds',fontsize=7)
         ax.set_xlabel('Time in s',fontsize=5)
         ax.set_ylabel('ECG in mV',fontsize=5)
-        ax.set_ylim([-3,5])
+        ax.set_ylim([-5,5])
         ax.xaxis.set_major_locator(MultipleLocator(1))
         ax.yaxis.set_major_locator(MultipleLocator(1))
 
