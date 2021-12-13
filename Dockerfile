@@ -21,8 +21,11 @@ ADD data /data
 # Add the models folder to the container
 ADD models /models
 
+# Add streamlit folder to the container
+ADD .streamlit /.streamlit
+
 # rename production config file to config to use the production configuration in streamlit
-RUN mkdir -p .streamlit/ && cp .streamlit/prod-config.toml .streamlit/config.toml
+RUN cp .streamlit/prod-config.toml .streamlit/config.toml
 
 # install the requirements
 RUN pip3 install -r app/requirements.txt
