@@ -9,6 +9,11 @@ RUN pip3 install --upgrade pip
 # Add the project folder to the container
 ADD app /app
 
+# Add src folder to the container
+ADD src app/src
+
+ADD setup.py /app/setup.py
+
 # Add the models folder to the container
 ADD models /models
 

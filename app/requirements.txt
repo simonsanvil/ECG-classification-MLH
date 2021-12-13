@@ -1,3 +1,5 @@
 # tensorflow>=2.5.1
 keras==2.4
 streamlit
+matplotlib
+-e .
