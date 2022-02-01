@@ -108,7 +108,7 @@ hide_streamlit_style = """
             top: 2px;
         }
 """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+st.markdown(hide_streamlit_style, unsafe_allow_html=False)
 
 #---------------------------------#
 # Sidebar - Collects user input features into dataframe
