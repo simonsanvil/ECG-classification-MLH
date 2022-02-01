@@ -3,4 +3,5 @@ keras==2.4
 streamlit
 matplotlib
 git+https://github.com/simonsanvil/subplotted.git
+git+https://github.com/simonsanvil/ECG-classification-MLH.git
 -e .
