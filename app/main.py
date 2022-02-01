@@ -27,10 +27,10 @@ dataset.
 
 ### Authors:
 
+- Simon E. Sanchez Viloria
 - Andres Ruiz Calvo
 - Daniel De Las Cuevas Turel
 - Enrique Botía Barbera
-- Simon E. Sanchez Viloria
 - Zijun He
 
 
@@ -158,6 +158,8 @@ if uploaded_file is None:
 else:
     st.sidebar.markdown("Remove the file above to demo using the validation set.")
 
+st.sidebar.markdown("---------------")
+st.sidebar.markdown("Check the [Github Repository](https://github.com/simonsanvil/ECG-classification-MLH) of this project")
 #---------------------------------#
 # Main panel
 
