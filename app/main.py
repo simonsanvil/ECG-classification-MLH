@@ -108,7 +108,7 @@ hide_streamlit_style = """
             top: 2px;
         }
 """
-st.markdown(hide_streamlit_style, unsafe_allow_html=False)
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 #---------------------------------#
 # Sidebar - Collects user input features into dataframe
@@ -190,6 +190,6 @@ if uploaded_file is not None:
         pred_confidence = conf[0,np.argmax(conf)]*100
         st.write("Confidence of the prediction: **{:3.1f}%**".format(pred_confidence))
         st.write(f"**Likelihoods:**")
-        st.markdown(mkd_pred_table, unsafe_allow_html=True)
+        st.markdown(mkd_pred_table, unsafe_allow_html=False)
 
     # st.line_chart(np.concatenate(ecg).ravel().tolist())
