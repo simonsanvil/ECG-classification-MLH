@@ -1,11 +1,5 @@
 FROM python:3.8-buster
 
-# Make sure pip and git are installed
-RUN apt-get update && apt-get install -y python3-pip && apt-get install -y git
-
-# Upgrade pip
-RUN pip3 install --upgrade pip
-
 # Add the project folder to the container
 ADD app /app
 

@@ -42,7 +42,7 @@ dataset.
 #---------------------------------#
 # Data preprocessing and Model building
 
-@st.cache(allow_output_mutation=True)
+@st.cache_data
 def read_ecg_preprocessing(uploaded_ecg):
 
       FS = 300
@@ -67,14 +67,14 @@ def read_ecg_preprocessing(uploaded_ecg):
 model_path = 'models/weights-best.hdf5'
 classes = ['Normal','Atrial Fibrillation','Other','Noise']
 
-@st.cache(allow_output_mutation=False,ttl=24*60*60)
+@st.cache_resource
 def get_model(model_path):
     model = load_model(f'{model_path}')
     return model
 
-@st.cache(allow_output_mutation=True,show_spinner=False)
-def get_prediction(data,model):
-    prob = model(data)
+@st.cache_resource
+def get_prediction(data,_model):
+    prob = _model(data)
     ann = np.argmax(prob)
     #true_target =
     #print(true_target,ann)
@@ -84,7 +84,7 @@ def get_prediction(data,model):
 
 
 # Visualization --------------------------------------
-@st.cache(allow_output_mutation=True,show_spinner=False)
+@st.cache_resource
 def visualize_ecg(ecg,FS):
     fig = plot_ecg(uploaded_ecg=ecg, FS=FS)
     return fig
@@ -181,15 +181,18 @@ if uploaded_file is not None:
         st.subheader('2. Model Predictions')
         with st.spinner(text="Running Model..."):
             pred,conf = get_prediction(ecg,model)
-        mkd_pred_table = """
-        | Rhythm Type | Confidence |
-        | --- | --- |
-        """ + "\n".join([f"| {classes[i]} | {conf[0][i]*100:.2f}% |" for i in range(len(classes))])
+        mkd_pred_table = [
+            "| Rhythm Type | Confidence |",
+            "| --- | --- |"
+        ]
+        for i in range(len(classes)):
+            mkd_pred_table.append(f"| {classes[i]} | {conf[0,i]*100:3.1f}% |")
+        mkd_pred_table = "\n".join(mkd_pred_table)
 
         st.write("ECG classified as **{}**".format(pred))
         pred_confidence = conf[0,np.argmax(conf)]*100
         st.write("Confidence of the prediction: **{:3.1f}%**".format(pred_confidence))
         st.write(f"**Likelihoods:**")
-        st.markdown(mkd_pred_table, unsafe_allow_html=False)
+        st.markdown(mkd_pred_table)
 
     # st.line_chart(np.concatenate(ecg).ravel().tolist())
